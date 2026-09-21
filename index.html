@@ -281,6 +281,9 @@ section{padding:var(--step) 0}
 .calc{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);border:2px solid var(--ink);background:var(--paper);border-radius:var(--r);overflow:hidden}
 .calc-in{padding:clamp(24px,3vw,40px);display:grid;gap:22px;border-right:2px solid var(--ink)}
 .calc-in .hint{margin-top:8px;font-size:13.5px;line-height:1.45;color:var(--mute);max-width:46ch}
+.calc-in .attach{margin-top:10px;font-size:14px;line-height:1.45;color:var(--ink);max-width:46ch;background:var(--panel);border-left:3px solid var(--accent);padding:10px 14px;border-radius:0 var(--r) var(--r) 0}
+.calc-in .attach strong{font-weight:700}
+.calc-in .attach[hidden]{display:none}
 .field label{display:block;margin-bottom:8px;color:var(--ink-2)}
 .field select,.field input{
   width:100%;font-family:var(--body);font-size:16px;
@@ -306,6 +309,11 @@ section{padding:var(--step) 0}
 .calc-out .vat{font-family:var(--mono);font-size:12px;letter-spacing:.04em;color:var(--mute);line-height:1.6}
 .calc-out .fine{padding-top:16px;border-top:1px solid var(--line);font-size:14.5px;color:var(--ink-2);max-width:40ch}
 .calc-out .btn{align-self:flex-start;margin-top:6px}
+.calc-out .btn.quiet{background:transparent;color:#121211;border-color:#121211}
+.calc-out .btn.quiet:hover{background:#121211;color:#FFFFFF}
+.calc-cta{display:flex;flex-wrap:wrap;gap:10px;margin-top:6px}
+.calc-cta .btn{margin-top:0}
+.calc-note{font-family:var(--mono);font-size:11.5px;letter-spacing:.04em;color:#121211;opacity:.7;line-height:1.5}
 @media(max-width:860px){
   .calc{grid-template-columns:1fr}
   .calc-in{border-right:0;border-bottom:2px solid var(--ink)}
@@ -643,6 +651,10 @@ footer{padding:32px 0;border-top:1px solid var(--line)}
             <span data-lang="de">Eine Vektordatei oder ein hoch aufgel&ouml;stes Bild Ihres Logos gen&uuml;gt. Eine Handskizze, ein Foto oder eine Idee z&auml;hlt als Entwurf von uns.</span>
             <span data-lang="en">A vector file or a high-resolution image of your logo is enough. A hand sketch, a photo or an idea counts as design from scratch.</span>
           </p>
+          <p class="attach" id="c-attach">
+            <span data-lang="de"><strong>Datei mitschicken:</strong> Klicken Sie unten auf WhatsApp oder E-Mail und h&auml;ngen Sie Ihre Datei an die Nachricht an. So k&ouml;nnen wir sofort loslegen.</span>
+            <span data-lang="en"><strong>Send your file with it:</strong> click WhatsApp or email below and attach your file to the message. That lets us start straight away.</span>
+          </p>
         </div>
         <div class="duo">
           <div class="field">
@@ -688,7 +700,11 @@ footer{padding:32px 0;border-top:1px solid var(--line)}
           <span data-lang="de">Enthalten sind Entwurf, Material, Maschinenzeit und Handarbeit.</span>
           <span data-lang="en">This covers design, material, machine time and hand finishing.</span>
         </div>
-        <a class="btn" href="#kontakt"><span data-lang="de">Verbindliches Angebot &rarr;</span><span data-lang="en">Get a firm quote &rarr;</span></a>
+        <div class="calc-cta">
+          <a class="btn" id="c-wa" href="#"><span data-lang="de">Per WhatsApp anfragen &rarr;</span><span data-lang="en">Ask via WhatsApp &rarr;</span></a>
+          <a class="btn quiet" id="c-mail" href="#"><span data-lang="de">Per E-Mail anfragen</span><span data-lang="en">Ask by email</span></a>
+        </div>
+        <p class="calc-note"><span data-lang="de">Ihre Auswahl wird automatisch in die Nachricht &uuml;bernommen.</span><span data-lang="en">Your selection is added to the message automatically.</span></p>
       </div>
     </div>
   </div>
@@ -1105,8 +1121,11 @@ footer{padding:32px 0;border-top:1px solid var(--line)}
     arr.forEach(function(t){ var s = document.createElement('span'); s.textContent = t; unit.appendChild(s); });
   }
 
+  var attach = document.getElementById('c-attach');
+  function hasFile(){ return file.value !== '145'; }
   function render(){
     var de = root.getAttribute('lang') !== 'en';
+    attach.hidden = !hasFile();
     var loc = de ? 'de-DE' : 'en-IE';
     var opt = what.selectedOptions[0];
 
@@ -1116,6 +1135,7 @@ footer{padding:32px 0;border-top:1px solid var(--line)}
         ? 'Das rechnen wir individuell. Schicken Sie uns Ihre Datei oder Ihre Idee, den Preis bekommen Sie in der Regel am selben Tag.'
         : 'We price this individually. Send us your file or your idea and you will have a price back, usually the same day.']);
       vat.textContent = '';
+      setQuoteLinks(de, null, null);
       return;
     }
 
@@ -1157,6 +1177,49 @@ footer{padding:32px 0;border-top:1px solid var(--line)}
     vat.textContent = de
       ? 'inkl. 19 % MwSt., zzgl. Versand. Unverbindlicher Richtwert, kein Angebot.'
       : 'incl. 19% VAT, plus shipping. Non-binding estimate, not an offer.';
+    setQuoteLinks(de, n, total);
+  }
+
+  /* ---- hand the selection over to WhatsApp / email ---- */
+  var cWa = document.getElementById('c-wa');
+  var cMail = document.getElementById('c-mail');
+  function optLabel(sel, de){
+    var t = sel.selectedOptions[0].textContent.trim();
+    var p = t.split(' / ');
+    return p.length > 1 ? (de ? p[0] : p[1]) : t;
+  }
+  function setQuoteLinks(de, n, total){
+    var L = [];
+    if (de){
+      L.push('Hallo, ich habe den Preisrechner auf objekteins.org genutzt und h\u00e4tte gern ein verbindliches Angebot.');
+      L.push('');
+      L.push('Was: ' + optLabel(what, true));
+      L.push('Datei: ' + optLabel(file, true) + (hasFile() ? ' (h\u00e4nge ich an diese Nachricht an)' : ''));
+      L.push('Gr\u00f6\u00dfe: ' + optLabel(size, true));
+      L.push('Material: ' + optLabel(mat, true));
+      L.push('Oberfl\u00e4che: ' + optLabel(fin, true));
+      L.push('Menge: ' + (n == null ? qty.value : n));
+      L.push('Richtwert: ' + (total == null ? 'auf Anfrage' : money('de-DE', total, 0)));
+      L.push('');
+      L.push('Details zu meinem Projekt:');
+    } else {
+      L.push('Hello, I used the price calculator on objekteins.org and would like a firm quote.');
+      L.push('');
+      L.push('What: ' + optLabel(what, false));
+      L.push('File: ' + optLabel(file, false) + (hasFile() ? ' (attached to this message)' : ''));
+      L.push('Size: ' + optLabel(size, false));
+      L.push('Material: ' + optLabel(mat, false));
+      L.push('Finish: ' + optLabel(fin, false));
+      L.push('Quantity: ' + (n == null ? qty.value : n));
+      L.push('Estimate: ' + (total == null ? 'on request' : money('en-IE', total, 0)));
+      L.push('');
+      L.push('About my project:');
+    }
+    var body = L.join('\n');
+    cWa.setAttribute('href', 'https://wa.me/' + WA_NUMBER + '?text=' + encodeURIComponent(body));
+    cWa.setAttribute('target', '_blank'); cWa.setAttribute('rel', 'noopener');
+    var subj = de ? 'Anfrage \u00fcber den Preisrechner' : 'Quote request from the price calculator';
+    cMail.setAttribute('href', 'mailto:hallo@objekteins.org?subject=' + encodeURIComponent(subj) + '&body=' + encodeURIComponent(body));
   }
 
   [what, file, size, mat, fin, qty].forEach(function(el){
