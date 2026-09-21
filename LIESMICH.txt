@@ -1,0 +1,23 @@
+objekteins.de  Website-Dateien
+==============================
+
+Was hier drin ist
+  index.html          Startseite
+  impressum.html      Impressum
+  datenschutz.html    Datenschutzerklaerung
+  agb.html            AGB
+  img/                Fotos (hero.jpg und gallery-01 bis gallery-29)
+  fonts/              Schriften Figtree, Karla, IBM Plex Mono, werden vom eigenen Server geladen
+  CNAME               sagt GitHub Pages, dass die Seite unter objekteins.de laeuft
+  robots.txt, sitemap.xml   fuer Google
+  .nojekyll           technische Datei fuer GitHub Pages, bitte drin lassen
+
+Aendern
+  WhatsApp-Nummer und Begruessungstext: in index.html nach "WA_NUMBER" suchen.
+  Fotos tauschen: neue Datei mit gleichem Namen in img/ ablegen, z. B. img/hero.jpg (16:9, mindestens 1400 px breit).
+  Alles andere: Aenderung mit Claude machen, dann die geaenderten Dateien hochladen.
+
+Noch offen vor dem Start
+  Datenschutz: HOSTER und LOGFRIST eintragen (bei GitHub Pages: "GitHub, Inc." und Logs laut GitHub-Datenschutz).
+  Hero-Foto: Rechte klaeren oder durch eigenes Foto ersetzen.
+  Impressum pruefen, Stand-Datum setzen, rechtliche Texte pruefen lassen.
