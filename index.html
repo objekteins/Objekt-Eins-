@@ -230,6 +230,9 @@ section{padding:var(--step) 0}
 .cap .caplink:hover{text-decoration:underline;text-decoration-color:var(--accent);text-decoration-thickness:3px;text-underline-offset:5px}
 .cap .capmore{display:inline-block;margin-top:9px;font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;color:var(--ink);border-bottom:2px solid var(--accent);padding-bottom:2px}
 .cap .capmore:hover{background:var(--accent)}
+.tile.linked .cap{cursor:pointer}
+.tile.linked:hover .caplink{text-decoration:underline;text-decoration-color:var(--accent);text-decoration-thickness:3px;text-underline-offset:5px}
+.tile.linked:hover .capmore{background:var(--accent)}
 @media(max-width:900px){
   .tiles{grid-template-columns:1fr 1fr;gap:18px}
   .cap{height:auto}
@@ -399,11 +402,15 @@ section{padding:var(--step) 0}
 
 /* ---------- footer ---------- */
 footer{padding:32px 0;border-top:1px solid var(--line)}
+@media(max-width:700px){footer{padding-bottom:88px}}
 .foot{display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap;font-family:var(--mono);font-size:12.5px;letter-spacing:.04em;color:var(--mute)}
 .foot a{text-decoration:none;margin-right:22px}
 .footlogo{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
 .footlogo .mark{height:24px}
 .footlogo .mark svg{height:24px}
+.footnav{display:flex;align-items:baseline;gap:0 0;flex-wrap:wrap;row-gap:8px;flex-basis:100%;order:2}
+.footnav a{margin-right:20px}
+.footnav .footlabel{margin-right:14px;text-transform:uppercase;letter-spacing:.1em;color:var(--mute);opacity:.72}
 .foot a:hover{color:var(--ink);text-decoration:underline;text-decoration-color:var(--accent);text-decoration-thickness:2px}
 </style>
 
@@ -636,20 +643,20 @@ footer{padding:32px 0;border-top:1px solid var(--line)}
         <div class="field">
           <label class="label" for="c-what"><span data-lang="de">Was brauchen Sie?</span><span data-lang="en">What do you need?</span></label>
           <select id="c-what">
-            <option value="25" data-per="letter">Schriftz&uuml;ge &amp; 3D-Buchstaben / Lettering &amp; 3D letters</option>
-            <option value="24" data-per="piece">Beschilderung &amp; T&uuml;rschilder / Signage &amp; door signs</option>
-            <option value="14" data-per="piece">Event &amp; Merchandise / Event &amp; merchandise</option>
-            <option value="22" data-per="piece" data-bigcut="0.25">Graffiti-Schablonen / Graffiti stencils</option>
-            <option value="35" data-per="part">Prototypen &amp; Funktionsteile / Prototypes &amp; working parts</option>
-            <option value="0" data-per="piece" data-quote="1">Customized / Something of your own</option>
+            <option value="25" data-per="letter" data-de="Schriftz&uuml;ge &amp; 3D-Buchstaben" data-en="Lettering &amp; 3D letters">Schriftz&uuml;ge &amp; 3D-Buchstaben</option>
+            <option value="24" data-per="piece" data-de="Beschilderung &amp; T&uuml;rschilder" data-en="Signage &amp; door signs">Beschilderung &amp; T&uuml;rschilder</option>
+            <option value="14" data-per="piece" data-de="Event &amp; Merchandise" data-en="Event &amp; merchandise">Event &amp; Merchandise</option>
+            <option value="7.8" data-per="piece" data-fees="15|30|90" data-qty="1" data-mat="1.15" data-de="Graffiti-Schablonen" data-en="Graffiti stencils">Graffiti-Schablonen</option>
+            <option value="35" data-per="part" data-de="Prototypen &amp; Funktionsteile" data-en="Prototypes &amp; working parts">Prototypen &amp; Funktionsteile</option>
+            <option value="0" data-per="piece" data-quote="1" data-de="Customized" data-en="Something of your own">Customized</option>
           </select>
         </div>
         <div class="field">
           <label class="label" for="c-file"><span data-lang="de">Haben Sie eine druckfertige Datei?</span><span data-lang="en">Do you have a print-ready file?</span></label>
           <select id="c-file">
-            <option value="30" data-lbl-de="Datenpr&uuml;fung" data-lbl-en="file check">Ja, druckfertig: STL, 3MF, STEP / Yes, print-ready file</option>
-            <option value="75" selected data-lbl-de="Aufbereitung" data-lbl-en="file prep">Nein, Logo als SVG, PDF oder scharfes JPG / No, logo as SVG, PDF or sharp JPG</option>
-            <option value="145" data-lbl-de="Entwurf" data-lbl-en="design">Nein, Entwurf von uns / No, we design it</option>
+            <option value="30" data-lbl-de="Datenpr&uuml;fung" data-lbl-en="file check" data-de="Ja, druckfertig: STL, 3MF, STEP" data-en="Yes, print-ready file">Ja, druckfertig: STL, 3MF, STEP</option>
+            <option value="75" selected data-lbl-de="Aufbereitung" data-lbl-en="file prep" data-de="Logo als SVG, PDF oder scharfes JPG" data-en="Logo as SVG, PDF or sharp JPG">Logo als SVG, PDF oder scharfes JPG</option>
+            <option value="145" data-lbl-de="Entwurf" data-lbl-en="design" data-de="Noch keine Datei, Entwurf von uns" data-en="No file yet, we design it">Noch keine Datei, Entwurf von uns</option>
           </select>
           <p class="hint">
             <span data-lang="de">Eine Vektordatei oder ein hoch aufgel&ouml;stes Bild Ihres Logos gen&uuml;gt. Eine Handskizze, ein Foto oder eine Idee z&auml;hlt als Entwurf von uns.</span>
@@ -664,18 +671,18 @@ footer{padding:32px 0;border-top:1px solid var(--line)}
           <div class="field">
             <label class="label" for="c-size"><span data-lang="de">Gr&ouml;&szlig;e, H&ouml;he</span><span data-lang="en">Size, height</span></label>
             <select id="c-size">
-              <option value="0.6">bis 6 cm / up to 6 cm</option>
-              <option value="1" selected>bis 12 cm / up to 12 cm</option>
-              <option value="2.4">bis 25 cm / up to 25 cm</option>
-              <option value="4.6">bis 50 cm / up to 50 cm</option>
-              <option value="7.5">&uuml;ber 50 cm / over 50 cm</option>
+              <option value="0.6" data-de="bis 6 cm" data-en="up to 6 cm">bis 6 cm</option>
+              <option value="1" selected data-de="bis 12 cm" data-en="up to 12 cm">bis 12 cm</option>
+              <option value="2.4" data-de="bis 25 cm" data-en="up to 25 cm">bis 25 cm</option>
+              <option value="4.6" data-de="bis 50 cm" data-en="up to 50 cm">bis 50 cm</option>
+              <option value="7.5" data-de="&uuml;ber 50 cm" data-en="over 50 cm">&uuml;ber 50 cm</option>
             </select>
           </div>
           <div class="field">
             <label class="label" for="c-mat"><span data-lang="de">Material</span><span data-lang="en">Material</span></label>
             <select id="c-mat">
               <option value="1">PLA</option>
-              <option value="1.15">PETG, robuster / PETG, tougher</option>
+              <option value="1.15" data-de="PETG, robuster" data-en="PETG, tougher">PETG, robuster</option>
             </select>
           </div>
         </div>
@@ -683,9 +690,9 @@ footer{padding:32px 0;border-top:1px solid var(--line)}
           <div class="field">
             <label class="label" for="c-fin"><span data-lang="de">Oberfl&auml;che</span><span data-lang="en">Finish</span></label>
             <select id="c-fin">
-              <option value="1">matt / matte</option>
-              <option value="1.05">seidengl&auml;nzend / silk</option>
-              <option value="1.3">mehrfarbig / multi-colour</option>
+              <option value="1" data-de="matt" data-en="matte">matt</option>
+              <option value="1.05" data-de="seidengl&auml;nzend" data-en="silk">seidengl&auml;nzend</option>
+              <option value="1.3" data-de="mehrfarbig" data-en="multi-colour">mehrfarbig</option>
             </select>
           </div>
           <div class="field">
@@ -881,6 +888,15 @@ footer{padding:32px 0;border-top:1px solid var(--line)}
 <footer>
   <div class="spine foot">
     <div class="footlogo"><span class="mark"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 4738 1000" aria-hidden="true"><rect width="1000" height="1000" rx="200" fill="currentColor"/><path d="M355.65 662.44Q306.68 662.44 269.48 641.67Q232.28 620.9 210.89 584.31Q189.5 547.74 189.5 500.0Q189.5 452.26 210.26 415.68Q231.04 379.1 268.55 358.33Q306.06 337.56 353.8 337.56Q402.78 337.56 440.28 358.33Q477.8 379.1 498.56 415.68Q519.33 452.26 519.33 500.0Q519.33 547.74 498.56 584.31Q477.8 620.9 440.6 641.67Q403.4 662.44 355.65 662.44ZM355.65 573.16Q374.26 573.16 388.83 563.85Q403.4 554.56 411.77 538.13Q420.14 521.7 420.14 500.0Q420.14 478.3 411.77 461.87Q403.4 445.44 388.52 436.14Q373.64 426.84 354.41 426.84Q335.2 426.84 320.32 436.14Q305.44 445.44 297.07 461.87Q288.7 478.3 288.7 500.0Q288.7 521.7 297.07 538.13Q305.44 554.56 320.63 563.85Q335.82 573.16 355.65 573.16Z M653.26 662.44Q604.9 662.44 567.7 641.67Q530.5 620.9 509.41 584.31Q488.34 547.74 488.34 500.0Q488.34 451.64 509.73 415.06Q531.12 378.48 568.31 358.02Q605.52 337.56 654.5 337.56Q698.52 337.56 733.86 358.64Q769.2 379.72 789.97 421.26Q810.74 462.8 810.74 524.8H588.78Q591.88 551.46 610.79 567.27Q629.69 583.08 655.74 583.08Q678.68 583.08 694.49 572.85Q710.3 562.62 716.5 547.12L802.06 576.26Q789.66 605.4 767.03 624.62Q744.4 643.84 715.26 653.14Q686.12 662.44 653.26 662.44ZM591.26 460.32H709.68Q707.19 441.72 697.89 430.87Q688.59 420.02 676.19 415.37Q663.8 410.72 651.4 410.72Q639.62 410.72 626.59 415.37Q613.57 420.02 603.97 430.87Q594.36 441.72 591.26 460.32Z" fill="var(--paper)"/><rect x="750" y="150" width="100" height="100" fill="var(--accent)"/><path d="M1570.96 748.64Q1514.08 748.64 1470.88 724.52Q1427.68 700.4 1402.84 657.92Q1378.0 615.44 1378.0 560.0Q1378.0 504.56 1402.12 462.08Q1426.24 419.6 1469.8 395.48Q1513.36 371.36 1568.8 371.36Q1625.68 371.36 1669.24 395.48Q1712.8 419.6 1736.92 462.08Q1761.04 504.56 1761.04 560.0Q1761.04 615.44 1736.92 657.92Q1712.8 700.4 1669.6 724.52Q1626.4 748.64 1570.96 748.64ZM1570.96 644.96Q1592.56 644.96 1609.48 634.16Q1626.4 623.36 1636.12 604.28Q1645.84 585.2 1645.84 560.0Q1645.84 534.8 1636.12 515.72Q1626.4 496.64 1609.12 485.84Q1591.84 475.04 1569.52 475.04Q1547.2 475.04 1529.92 485.84Q1512.63 496.64 1502.92 515.72Q1493.2 534.8 1493.2 560.0Q1493.2 585.2 1502.92 604.28Q1512.63 623.36 1530.28 634.16Q1547.92 644.96 1570.96 644.96Z M1997.91 748.64Q1963.36 748.64 1937.44 734.59Q1911.52 720.56 1894.23 693.92L1889.91 740.0H1783.36V236.0H1895.67V423.2Q1912.95 398.0 1938.52 384.68Q1964.08 371.36 1997.91 371.36Q2048.31 371.36 2085.04 394.04Q2121.75 416.72 2141.2 458.84Q2160.64 500.96 2160.64 560.0Q2160.64 618.32 2141.2 660.8Q2121.75 703.28 2085.04 725.96Q2048.31 748.64 1997.91 748.64ZM1969.12 644.96Q1990.71 644.96 2007.27 634.16Q2023.84 623.36 2033.92 604.28Q2044.0 585.2 2044.0 560.0Q2044.0 534.8 2034.63 515.72Q2025.27 496.64 2008.35 485.84Q1991.43 475.04 1969.84 475.04Q1948.23 475.04 1931.31 485.84Q1914.39 496.64 1905.04 516.07Q1895.67 535.52 1895.67 560.0Q1895.67 585.2 1905.04 604.28Q1914.39 623.36 1930.96 634.16Q1947.52 644.96 1969.12 644.96Z M2261.43 336.8Q2235.52 336.8 2216.08 317.36Q2196.64 297.92 2196.64 272.0Q2196.64 245.36 2216.08 225.92Q2235.52 206.48 2261.43 206.48Q2288.08 206.48 2307.51 225.92Q2326.95 245.36 2326.95 272.0Q2326.95 297.92 2307.51 317.36Q2288.08 336.8 2261.43 336.8ZM2181.52 894.8Q2134.72 894.8 2098.72 871.04L2144.79 778.16Q2153.43 783.2 2162.08 786.8Q2170.72 790.4 2177.91 790.4Q2205.27 790.4 2205.27 752.96V380.0H2317.6V760.88Q2317.6 824.24 2282.31 859.52Q2247.04 894.8 2181.52 894.8Z M2540.08 748.64Q2483.92 748.64 2440.72 724.52Q2397.52 700.4 2373.04 657.92Q2348.56 615.44 2348.56 560.0Q2348.56 503.84 2373.39 461.36Q2398.24 418.88 2441.43 395.12Q2484.64 371.36 2541.52 371.36Q2592.64 371.36 2633.68 395.84Q2674.72 420.32 2698.84 468.55Q2722.96 516.8 2722.96 588.8H2465.2Q2468.8 619.76 2490.76 638.12Q2512.72 656.48 2542.96 656.48Q2569.6 656.48 2587.96 644.6Q2606.31 632.72 2613.52 614.72L2712.88 648.56Q2698.48 682.4 2672.2 704.72Q2645.92 727.04 2612.08 737.83Q2578.24 748.64 2540.08 748.64ZM2468.08 513.92H2605.6Q2602.72 492.32 2591.92 479.72Q2581.12 467.12 2566.72 461.72Q2552.31 456.32 2537.92 456.32Q2524.24 456.32 2509.12 461.72Q2494.0 467.12 2482.84 479.72Q2471.68 492.32 2468.08 513.92Z M2738.07 740.0V236.0H2850.39V500.96L2959.12 380.0H3090.87L2954.79 535.52L3100.24 740.0H2969.91L2883.51 616.88L2850.39 653.6V740.0Z M3265.12 748.64Q3201.04 748.64 3169.72 718.04Q3138.4 687.44 3138.4 630.56V474.32H3082.24V380.0H3138.4V267.68H3250.72V380.0H3332.79V474.32H3250.72V602.48Q3250.72 624.08 3258.64 634.16Q3266.56 644.24 3283.12 644.24Q3289.6 644.24 3298.24 641.0Q3306.88 637.76 3314.08 632.72L3352.96 714.8Q3335.68 729.2 3311.56 738.92Q3287.44 748.64 3265.12 748.64Z M3684.88 748.64Q3628.72 748.64 3585.52 724.52Q3542.32 700.4 3517.84 657.92Q3493.36 615.44 3493.36 560.0Q3493.36 503.84 3518.2 461.36Q3543.04 418.88 3586.24 395.12Q3629.44 371.36 3686.32 371.36Q3737.44 371.36 3778.48 395.84Q3819.52 420.32 3843.64 468.55Q3867.76 516.8 3867.76 588.8H3610.0Q3613.60 619.76 3635.56 638.12Q3657.52 656.48 3687.76 656.48Q3714.4 656.48 3732.76 644.6Q3751.12 632.72 3758.32 614.72L3857.68 648.56Q3843.28 682.4 3817.0 704.72Q3790.72 727.04 3756.88 737.83Q3723.04 748.64 3684.88 748.64ZM3612.88 513.92H3750.4Q3747.52 492.32 3736.72 479.72Q3725.92 467.12 3711.52 461.72Q3697.12 456.32 3682.72 456.32Q3669.04 456.32 3653.92 461.72Q3638.8 467.12 3627.64 479.72Q3616.48 492.32 3612.88 513.92Z M3889.35 740.0V380.0H4001.68V740.0ZM3945.52 333.92Q3920.31 333.92 3901.24 314.84Q3882.16 295.76 3882.16 270.56Q3882.16 243.92 3901.24 225.56Q3920.31 207.20 3945.52 207.20Q3971.44 207.20 3990.16 225.56Q4008.87 243.92 4008.87 270.56Q4008.87 295.76 3990.16 314.84Q3971.44 333.92 3945.52 333.92Z M4049.2 740.0V380.0H4155.04L4159.36 426.08Q4177.36 400.16 4203.28 385.76Q4229.2 371.36 4261.6 371.36Q4304.8 371.36 4334.32 389.0Q4363.84 406.64 4378.6 442.64Q4393.36 478.64 4393.36 534.8V740.0H4281.04V555.68Q4281.04 526.88 4274.55 509.96Q4268.08 493.04 4256.2 485.12Q4244.32 477.2 4227.04 476.48Q4194.64 475.76 4178.08 494.12Q4161.52 512.48 4161.52 549.92V740.0Z M4564.71 748.64Q4529.44 748.64 4498.84 738.2Q4468.24 727.76 4445.92 708.68Q4423.59 689.6 4412.79 662.24L4504.95 623.36Q4514.32 642.08 4530.87 651.08Q4547.44 660.08 4564.71 660.08Q4582.71 660.08 4592.79 653.96Q4602.87 647.84 4602.87 637.04Q4602.87 625.52 4592.43 619.04Q4581.99 612.56 4562.55 607.52L4531.59 599.6Q4481.2 586.64 4454.2 556.76Q4427.2 526.88 4427.2 487.28Q4427.2 431.84 4465.36 401.6Q4503.51 371.36 4571.2 371.36Q4609.36 371.36 4638.51 381.44Q4667.67 391.52 4687.48 409.88Q4707.28 428.24 4715.91 452.72L4626.63 489.44Q4621.59 475.04 4606.11 467.48Q4590.63 459.92 4571.91 459.92Q4556.07 459.92 4547.43 466.76Q4538.79 473.6 4538.79 485.12Q4538.79 493.76 4549.24 499.88Q4559.67 506.0 4579.83 511.04L4617.99 520.4Q4651.83 529.04 4674.87 546.68Q4697.91 564.31 4709.43 587.72Q4720.95 611.12 4720.95 637.76Q4720.95 671.6 4701.16 696.44Q4681.36 721.28 4646.08 734.96Q4610.79 748.64 4564.71 748.64Z" fill="currentColor"/></svg></span><span><span data-lang="de">3D-Druck-Studio, Berlin. Eine Marke der Mensch Creative GmbH.</span><span data-lang="en">3D printing studio, Berlin. A brand of Mensch Creative GmbH.</span></span></div>
+    <div class="footnav">
+      <span class="footlabel"><span data-lang="de">Leistungen</span><span data-lang="en">Services</span></span>
+      <a href="#kategorien"><span data-lang="de">Schriftz&uuml;ge</span><span data-lang="en">Lettering</span></a>
+      <a href="#kategorien"><span data-lang="de">Beschilderung</span><span data-lang="en">Signage</span></a>
+      <a href="#kategorien"><span data-lang="de">Event &amp; Merchandise</span><span data-lang="en">Event &amp; merchandise</span></a>
+      <a href="graffiti-schablonen.html" data-href-de="graffiti-schablonen.html" data-href-en="graffiti-stencils.html"><span data-lang="de">Graffiti-Schablonen</span><span data-lang="en">Graffiti stencils</span></a>
+      <a href="#kategorien"><span data-lang="de">Prototypen</span><span data-lang="en">Prototypes</span></a>
+      <a href="#kategorien"><span data-lang="de">Customized</span><span data-lang="en">Customized</span></a>
+    </div>
     <div>
       <a href="impressum.html">Impressum</a><a href="datenschutz.html">Datenschutz</a><a href="agb.html">AGB</a>© 2026
     </div>
@@ -1029,7 +1045,15 @@ footer{padding:32px 0;border-top:1px solid var(--line)}
         frame.appendChild(a);
       });
 
-      frame.addEventListener('click', function(){ show(state.i + 1); });
+      frame.addEventListener('click', function(){
+        if (item.href && window.matchMedia('(hover:hover)').matches){ goto(); return; }
+        show(state.i + 1);
+      });
+    }
+
+    function goto(){
+      var l = tile.querySelector('.caplink');
+      if (l) window.location.href = l.getAttribute('href');
     }
 
     var cap = document.createElement('div');
@@ -1056,6 +1080,18 @@ footer{padding:32px 0;border-top:1px solid var(--line)}
       if (item.hrefEn) ml.setAttribute('data-href-en', item.hrefEn);
       ml.appendChild(bi('span', item.more[0] + ' \u2192', item.more[1] + ' \u2192'));
       cap.appendChild(ml);
+    }
+
+    if (item.href){
+      tile.classList.add('linked');
+      cap.addEventListener('click', function(e){
+        if (e.target.closest('a')) return;
+        goto();
+      });
+      if (!many){
+        frame.style.cursor = 'pointer';
+        frame.addEventListener('click', goto);
+      }
     }
 
     tile.appendChild(frame);
@@ -1107,6 +1143,10 @@ footer{padding:32px 0;border-top:1px solid var(--line)}
     bDE.setAttribute('aria-current', String(l === 'de'));
     bEN.setAttribute('aria-current', String(l === 'en'));
     setWa(l);
+    document.querySelectorAll('option[data-de]').forEach(function(o){
+      var t = o.getAttribute(l === 'en' ? 'data-en' : 'data-de');
+      if (t) o.textContent = t;
+    });
     document.querySelectorAll('[data-href-de]').forEach(function(a){
       var t = a.getAttribute(l === 'en' ? 'data-href-en' : 'data-href-de');
       if (t) a.setAttribute('href', t);
@@ -1153,6 +1193,12 @@ footer{padding:32px 0;border-top:1px solid var(--line)}
 
   var attach = document.getElementById('c-attach');
   function hasFile(){ return file.value !== '145'; }
+  function applyCatDefaults(){
+    var o = what.selectedOptions[0];
+    qty.value = o.dataset.qty || '25';
+    mat.value = o.dataset.mat || '1';
+  }
+
   function render(){
     var de = root.getAttribute('lang') !== 'en';
     attach.hidden = !hasFile();
@@ -1180,7 +1226,8 @@ footer{padding:32px 0;border-top:1px solid var(--line)}
     var cut = parseFloat(opt.dataset.bigcut || '0');
     var szAdj = (cut > 0 && sz >= 2.4) ? sz * (1 - cut) : sz;
     var each = base * szAdj * parseFloat(mat.value) * parseFloat(fin.value) * (1 - d);
-    var fee  = parseFloat(file.value);
+    var fees = opt.dataset.fees ? opt.dataset.fees.split('|') : null;
+    var fee  = fees ? parseFloat(fees[file.selectedIndex]) : parseFloat(file.value);
     var total = Math.max(each * n + fee, 25);
 
     sum.textContent = money(loc, total, 0);
@@ -1256,6 +1303,7 @@ footer{padding:32px 0;border-top:1px solid var(--line)}
     el.addEventListener('input', render);
     el.addEventListener('change', render);
   });
+  what.addEventListener('change', function(){ applyCatDefaults(); render(); });
   render();
 })();
 </script>
