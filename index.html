@@ -643,11 +643,11 @@ footer{padding:32px 0;border-top:1px solid var(--line)}
         <div class="field">
           <label class="label" for="c-what"><span data-lang="de">Was brauchen Sie?</span><span data-lang="en">What do you need?</span></label>
           <select id="c-what">
-            <option value="25" data-per="letter" data-de="Schriftz&uuml;ge &amp; 3D-Buchstaben" data-en="Lettering &amp; 3D letters">Schriftz&uuml;ge &amp; 3D-Buchstaben</option>
-            <option value="24" data-per="piece" data-de="Beschilderung &amp; T&uuml;rschilder" data-en="Signage &amp; door signs">Beschilderung &amp; T&uuml;rschilder</option>
-            <option value="14" data-per="piece" data-de="Event &amp; Merchandise" data-en="Event &amp; merchandise">Event &amp; Merchandise</option>
-            <option value="7.8" data-per="piece" data-fees="15|30|90" data-qty="1" data-mat="1.15" data-de="Graffiti-Schablonen" data-en="Graffiti stencils">Graffiti-Schablonen</option>
-            <option value="35" data-per="part" data-de="Prototypen &amp; Funktionsteile" data-en="Prototypes &amp; working parts">Prototypen &amp; Funktionsteile</option>
+            <option value="38" data-per="letter" data-fees="15|30|145" data-de="Schriftz&uuml;ge &amp; 3D-Buchstaben" data-en="Lettering &amp; 3D letters">Schriftz&uuml;ge &amp; 3D-Buchstaben</option>
+            <option value="33" data-per="piece" data-fees="15|30|145" data-de="Beschilderung &amp; T&uuml;rschilder" data-en="Signage &amp; door signs">Beschilderung &amp; T&uuml;rschilder</option>
+            <option value="33" data-per="piece" data-fees="15|30|145" data-de="Event &amp; Merchandise" data-en="Event &amp; merchandise">Event &amp; Merchandise</option>
+            <option value="7.8" data-per="piece" data-fees="15|30|90" data-mat="1.15" data-de="Graffiti-Schablonen" data-en="Graffiti stencils">Graffiti-Schablonen</option>
+            <option value="35" data-per="part" data-fees="15|30|145" data-de="Prototypen &amp; Funktionsteile" data-en="Prototypes &amp; working parts">Prototypen &amp; Funktionsteile</option>
             <option value="0" data-per="piece" data-quote="1" data-de="Customized" data-en="Something of your own">Customized</option>
           </select>
         </div>
@@ -697,7 +697,7 @@ footer{padding:32px 0;border-top:1px solid var(--line)}
           </div>
           <div class="field">
             <label class="label" for="c-qty"><span data-lang="de">Menge, keine Mindestmenge</span><span data-lang="en">Quantity, no minimum</span></label>
-            <input id="c-qty" type="number" min="1" max="5000" step="1" value="25">
+            <input id="c-qty" type="number" min="1" max="5000" step="1" value="1">
           </div>
         </div>
       </div>
@@ -1195,7 +1195,7 @@ footer{padding:32px 0;border-top:1px solid var(--line)}
   function hasFile(){ return file.value !== '145'; }
   function applyCatDefaults(){
     var o = what.selectedOptions[0];
-    qty.value = o.dataset.qty || '25';
+    qty.value = o.dataset.qty || '1';
     mat.value = o.dataset.mat || '1';
   }
 
@@ -1237,11 +1237,23 @@ footer{padding:32px 0;border-top:1px solid var(--line)}
     else if (per === 'part')  perLabel = de ? 'pro Teil' : 'per part';
     else                      perLabel = de ? 'pro Stück' : 'per piece';
 
-    var parts = ['≈ ' + money(loc, each, 2) + ' ' + perLabel + ', ' + n + (de ? ' Stück' : ' pcs')];
-    if (fee > 0){
-      var fopt = file.selectedOptions[0];
-      var flbl = de ? (fopt.dataset.lblDe || 'Entwurf') : (fopt.dataset.lblEn || 'design');
-      parts.push((de ? 'einmalig ' : 'one-off ') + money(loc, fee, 0) + ' ' + flbl);
+    var one, many;
+    if (per === 'letter'){
+      one  = de ? '1 Buchstabe' : '1 letter';
+      many = n + (de ? ' Buchstaben' : ' letters');
+    } else if (per === 'part'){
+      one  = de ? '1 Teil' : '1 part';
+      many = n + (de ? ' Teile' : ' parts');
+    } else {
+      one  = de ? '1 Stück' : '1 piece';
+      many = n + (de ? ' Stück' : ' pieces');
+    }
+
+    var parts = [];
+    if (n === 1){
+      parts.push(one);
+    } else {
+      parts.push(many + ', ≈ ' + money(loc, total / n, 2) + ' ' + perLabel);
     }
     if (d > 0) parts.push((de ? 'inkl. ' : 'incl. ') + Math.round(d * 100) + ' % ' + (de ? 'Mengenrabatt' : 'volume discount'));
     var lead;
